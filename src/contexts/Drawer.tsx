@@ -1,11 +1,11 @@
 import { FC, ReactNode, createContext, useContext, useState } from "react"
-import { HackerNewsComment } from "../types/story-types"
+import { StoryTypesInterface } from "../types/story-types"
 
 interface DrawerContextValue {
   isActive: boolean
-  dataContent: HackerNewsComment[] | undefined
+  dataContent: StoryTypesInterface | undefined
   setDrawer: React.Dispatch<React.SetStateAction<boolean>>
-  setDataContent: React.Dispatch<React.SetStateAction<HackerNewsComment[] | undefined>>
+  setDataContent: React.Dispatch<React.SetStateAction<StoryTypesInterface | undefined>>
 }
 
 const DrawerContext = createContext<DrawerContextValue | undefined>(undefined)
@@ -23,7 +23,7 @@ export const useDrawerContext = (): DrawerContextValue => {
 };
 
 export const DrawerContextProvider: FC<DrawerContextProviderProps> = ({ children }) => {
-  const [dataContent, setDataContent] = useState<HackerNewsComment[]>()
+  const [dataContent, setDataContent] = useState<StoryTypesInterface>()
   const [isActive, setIsActive] = useState<boolean>(false)
 
   return (

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useEffect, useRef, useState } from 'react'
-import Story from "../components/Story";
+import Story from "../components/HNStory";
 import { useFetch } from "../hooks/useFetch";
 import HNLoader from "../components/UI/HNLoader";
 import HNDrawer from "../components/UI/HNDrawer"
@@ -59,7 +59,10 @@ const Asks: FC = () => {
       <div ref={observerElement}></div>
       <HNDrawer>
         <div className="divide-y space-y-4">
-          {dataContent?.map((element) => {
+          {
+            dataContent && (<Story id={dataContent?.id} />)
+          }
+          {dataContent?.children?.map((element) => {
             return (
               <div key={element.id}>
                 <Comment comment={element} />

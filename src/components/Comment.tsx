@@ -27,7 +27,7 @@ const Comment: FC<CommentProps> = ({ comment }) => {
     <>
       <HNCard className="mt-4 relative rounded-tl-none bg-white rounded-md">
         <div className="h-4 w-1 border-l border-gray-300 absolute -top-4 left-0`"></div>
-        <div className="flex divide-x divide-gray-400 mb-2">
+        <div className="flex divide-x divide-gray-400 mb-2 text-gray-700">
           <div className='text-sm flex gap-1  items-center pr-2'>
             <Icons.User className="w-4 h-4" />
             <span>{comment.author}</span>
@@ -38,7 +38,7 @@ const Comment: FC<CommentProps> = ({ comment }) => {
           </div>
         </div>
         <pre
-          className='whitespace-normal font-sans text-gray-800 leading-7'
+          className='whitespace-normal font-sans text-gray-700 leading-7'
           dangerouslySetInnerHTML={{ __html: comment.text as string }}
           key={comment.id}
         >

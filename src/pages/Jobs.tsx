@@ -1,11 +1,8 @@
 import { FC } from "react";
 import { useEffect, useRef, useState } from 'react'
-import Story from "../components/Story";
+import Story from "../components/HNStory";
 import { useFetch } from "../hooks/useFetch";
 import HNLoader from "../components/UI/HNLoader";
-import HNDrawer from "../components/UI/HNDrawer";
-import { useDrawerContext } from "../contexts/Drawer";
-import Comment from "../components/Comment";
 
 const Jobs: FC = () => {
   const [storyList, setStoryList] = useState<number[]>([])
@@ -14,7 +11,6 @@ const Jobs: FC = () => {
 
   const { data: stories, loading } = useFetch<number[]>('https://hacker-news.firebaseio.com/v0/jobstories.json?print=pretty')
 
-  const { dataContent } = useDrawerContext()
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -51,22 +47,11 @@ const Jobs: FC = () => {
       {storyList && (
         <div className='space-y-3'>
           {storyList.map((id, idx) => (
-            <Story key={id} id={id} index={idx + 1} />
+            <Story key={id} id={id} index={idx + 1} comment={false} points={false} />
           ))}
         </div>
       )}
       <div ref={observerElement}></div>
-      <HNDrawer>
-        <div className="divide-y space-y-4">
-          {dataContent?.map((element) => {
-            return (
-              <div key={element.id}>
-                <Comment comment={element} />
-              </div>
-            )
-          })}
-        </div>
-      </HNDrawer>
     </main>
   );
 }

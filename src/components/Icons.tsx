@@ -1,4 +1,4 @@
-import { BadgeHelp, Contact2, Home, MessageSquare, Vote, Clock4, User, Coffee, Triangle, Loader2 } from "lucide-react"
+import { BadgeHelp, Contact2, Home, MessageSquare, Vote, Clock4, User, Coffee, Triangle, Loader2, Flame } from "lucide-react"
 export const Icons = {
   Home,
   BadgeHelp,
@@ -10,6 +10,7 @@ export const Icons = {
   Coffee,
   Triangle,
   Loader2,
+  Flame
 }
 
 export type Icon = keyof typeof Icons
