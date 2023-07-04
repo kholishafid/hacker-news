@@ -21,7 +21,7 @@ const HNShowStory: FC<HNShowStoryProps> = ({ id, index }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        fetch(`http://hn.algolia.com/api/v1/items/${id}`)
+        fetch(`https://hn.algolia.com/api/v1/items/${id}`)
           .then((res) => res.json())
           .then((data) => setData(data))
       } catch (err) {

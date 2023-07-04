@@ -23,7 +23,7 @@ const Story: FC<StoryProps> = ({ id, index, comment = true, points = true }) => 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        fetch(`http://hn.algolia.com/api/v1/items/${id}`)
+        fetch(`https://hn.algolia.com/api/v1/items/${id}`)
           .then((res) => res.json())
           .then((data) => setData(data))
       } catch (err) {
