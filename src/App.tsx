@@ -1,7 +1,6 @@
-import { Outlet, RouterProvider } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import './App.css'
 import Sidebar, { MenuItem } from './components/UI/Sidebar'
-import { router } from './router'
 import { DrawerContextProvider } from './contexts/Drawer'
 
 
@@ -23,6 +22,11 @@ function App() {
       icon: 'Contact2',
       path: '/job',
     },
+    {
+      label: 'Show',
+      icon: 'Flame',
+      path: '/show',
+    }
   ]
 
   return (
