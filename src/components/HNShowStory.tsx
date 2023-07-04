@@ -39,7 +39,7 @@ const HNShowStory: FC<HNShowStoryProps> = ({ id, index }) => {
 
   return (
     <div>
-      {story ?
+      {story && !loading ?
         (
           <div className='border-b border-gray-200 p-4 shadow-sm text-gray-700 flex'>
             {index && (
@@ -96,7 +96,7 @@ const HNShowStory: FC<HNShowStoryProps> = ({ id, index }) => {
           </div>
         )
       }
-      {/* {error && <h1>There was an Error</h1>} */}
+      {error && <h1>There was an Error</h1>}
     </div >
   )
 }

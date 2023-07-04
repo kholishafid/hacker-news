@@ -41,7 +41,7 @@ const Story: FC<StoryProps> = ({ id, index, comment = true, points = true }) => 
 
   return (
     <div>
-      {story ?
+      {story && !loading ?
         (
           <div className='border-b border-gray-200 p-4 shadow-sm text-gray-700 flex'>
             {index && (
@@ -95,7 +95,7 @@ const Story: FC<StoryProps> = ({ id, index, comment = true, points = true }) => 
           </div>
         )
       }
-      {/* {error && <h1>There was an Error</h1>} */}
+      {error && <h1>There was an Error</h1>}
     </div >
   );
 }
