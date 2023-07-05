@@ -5,6 +5,8 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { Icons } from "./Icons";
 import Skeleton from "./Skeleton";
 import { useDrawerContext } from "../contexts/Drawer";
+import HNModal from "./UI/HNModal";
+import HNUserDetail from "./HNUserDetail";
 
 dayjs.extend(relativeTime)
 
@@ -39,6 +41,13 @@ const Story: FC<StoryProps> = ({ id, index, comment = true, points = true }) => 
 
   const { setDrawer, setDataContent } = useDrawerContext()
 
+  const username = (story: StoryTypesInterface) => {
+    return (<div className={`text-sm flex gap-1  items-center hover:underline cursor-pointer ${points ? 'px-2' : 'pr-2'}`}>
+      <Icons.User className="w-4 h-4" />
+      <span>{story.author}</span>
+    </div>)
+  }
+
   return (
     <div>
       {story && !loading ?
@@ -60,10 +69,9 @@ const Story: FC<StoryProps> = ({ id, index, comment = true, points = true }) => 
                     <span>{story.points}</span>
                   </div>
                 }
-                <div className={`text-sm flex gap-1  items-center ${points ? 'px-2' : 'pr-2'}`}>
-                  <Icons.User className="w-4 h-4" />
-                  <span>{story.author}</span>
-                </div>
+                <HNModal trigger={username(story)}>
+                  <HNUserDetail id={story.author} />
+                </HNModal>
                 <div className='text-sm flex gap-1  items-center px-2'>
                   <Icons.Clock4 className="w-4 h-4" />
                   <span>{dayjs.unix(story.created_at_i).fromNow()}</span>

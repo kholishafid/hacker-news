@@ -6,6 +6,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import HNCollapsible from "./UI/HNCollapsible";
 import * as Collapsible from "@radix-ui/react-collapsible";
+import HNModal from "./UI/HNModal";
+import HNUserDetail from "./HNUserDetail";
 
 dayjs.extend(relativeTime);
 
@@ -28,10 +30,14 @@ const Comment: FC<CommentProps> = ({ comment }) => {
       <HNCard className="mt-4 relative rounded-tl-none bg-white rounded-md">
         <div className="h-4 w-1 border-l border-gray-300 absolute -top-4 left-0`"></div>
         <div className="flex divide-x divide-gray-400 mb-2 text-gray-700">
-          <div className='text-sm flex gap-1  items-center pr-2'>
-            <Icons.User className="w-4 h-4" />
-            <span>{comment.author}</span>
-          </div>
+          <HNModal trigger={(
+            <div className='text-sm flex gap-1  items-center px-2 hover:underline cursor-pointer'>
+              <Icons.User className="w-4 h-4" />
+              <span>{comment.author}</span>
+            </div>
+          )}>
+            <HNUserDetail id={comment.author} />
+          </HNModal>
           <div className='text-sm flex gap-1  items-center px-2'>
             <Icons.Clock4 className="w-4 h-4" />
             <span>{dayjs.unix(comment.created_at_i).fromNow()}</span>
