@@ -1,23 +1,27 @@
 import { FC } from "react";
-import { useEffect, useRef, useState } from 'react'
-import Story from "../components/HNStory";
+import { useEffect, useRef, useState } from "react";
+import Story from "../components/Story/HNStory";
 import { useFetch } from "../hooks/useFetch";
 import HNLoader from "../components/UI/HNLoader";
 
 const Jobs: FC = () => {
-  const [storyList, setStoryList] = useState<number[]>([])
+  const [storyList, setStoryList] = useState<number[]>([]);
 
-  const observerElement = useRef<HTMLDivElement>(null)
+  const observerElement = useRef<HTMLDivElement>(null);
 
-  const { data: stories, loading } = useFetch<number[]>('https://hacker-news.firebaseio.com/v0/jobstories.json?print=pretty')
-
+  const { data: stories, loading } = useFetch<number[]>(
+    "https://hacker-news.firebaseio.com/v0/jobstories.json?print=pretty"
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      entries => {
+      (entries) => {
         if (entries[0].isIntersecting) {
           if (stories) {
-            setStoryList(prev => [...prev, ...stories.slice(prev.length, prev.length + 20)])
+            setStoryList((prev) => [
+              ...prev,
+              ...stories.slice(prev.length, prev.length + 20),
+            ]);
           }
         }
       },
@@ -28,7 +32,7 @@ const Jobs: FC = () => {
       observer.observe(observerElement.current);
     }
 
-    const observerElementCurrent = observerElement.current
+    const observerElementCurrent = observerElement.current;
 
     return () => {
       if (observerElementCurrent) {
@@ -38,22 +42,28 @@ const Jobs: FC = () => {
   }, [observerElement, stories]);
 
   useEffect(() => {
-    setStoryList(stories?.slice(0, 20) || [])
-  }, [stories])
+    setStoryList(stories?.slice(0, 20) || []);
+  }, [stories]);
 
   return (
-    <main className='p-4 md:ml-64 relative h-screen'>
-      {loading || storyList.length === 0 && <HNLoader />}
+    <main className="relative h-screen w-full overflow-y-auto">
+      {loading || (storyList.length === 0 && <HNLoader />)}
       {storyList && (
-        <div className='space-y-3'>
+        <div className="space-y-3">
           {storyList.map((id, idx) => (
-            <Story key={id} id={id} index={idx + 1} comment={false} points={false} />
+            <Story
+              key={id}
+              id={id}
+              index={idx + 1}
+              comment={false}
+              points={false}
+            />
           ))}
         </div>
       )}
       <div ref={observerElement}></div>
     </main>
   );
-}
+};
 
 export default Jobs;

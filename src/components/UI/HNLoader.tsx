@@ -1,12 +1,12 @@
 import { FC } from "react";
-import { Icons } from "../Icons";
+import { Loader2 } from "lucide-react";
 
 const HNLoader: FC = () => {
   return (
-    <div className="absolute bg-black/5 grid place-items-center inset-0">
-      <Icons.Loader2 className="w-5 h-5 animate-spin" />
+    <div className="absolute inset-0 p-6 flex justify-center">
+      <Loader2 className="w-6 h-6 animate-spin" />
     </div>
   );
-}
+};
 
 export default HNLoader;

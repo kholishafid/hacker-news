@@ -1,26 +1,30 @@
 import { FC } from "react";
-import { useEffect, useRef, useState } from 'react'
-import Story from "../components/HNStory";
+import { useEffect, useRef, useState } from "react";
+import Story from "../components/Story/HNStory";
 import { useFetch } from "../hooks/useFetch";
 import HNLoader from "../components/UI/HNLoader";
-import HNDrawer from "../components/UI/HNDrawer"
+import HNDrawer from "../components/UI/HNDrawer";
 import { useDrawerContext } from "../contexts/Drawer";
-import Comment from "../components/Comment";
-
+import Comment from "../components/HNCommentBlock";
 
 const Asks: FC = () => {
-  const [storyList, setStoryList] = useState<number[]>([])
+  const [storyList, setStoryList] = useState<number[]>([]);
 
-  const observerElement = useRef<HTMLDivElement>(null)
+  const observerElement = useRef<HTMLDivElement>(null);
 
-  const { data: stories, loading } = useFetch<number[]>('https://hacker-news.firebaseio.com/v0/askstories.json?print=pretty')
+  const { data: stories, loading } = useFetch<number[]>(
+    "https://hacker-news.firebaseio.com/v0/askstories.json?print=pretty"
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      entries => {
+      (entries) => {
         if (entries[0].isIntersecting) {
           if (stories) {
-            setStoryList(prev => [...prev, ...stories.slice(prev.length, prev.length + 20)])
+            setStoryList((prev) => [
+              ...prev,
+              ...stories.slice(prev.length, prev.length + 20),
+            ]);
           }
         }
       },
@@ -31,7 +35,7 @@ const Asks: FC = () => {
       observer.observe(observerElement.current);
     }
 
-    const observerElementCurrent = observerElement.current
+    const observerElementCurrent = observerElement.current;
 
     return () => {
       if (observerElementCurrent) {
@@ -41,16 +45,16 @@ const Asks: FC = () => {
   }, [observerElement, stories]);
 
   useEffect(() => {
-    setStoryList(stories?.slice(0, 20) || [])
-  }, [stories])
+    setStoryList(stories?.slice(0, 20) || []);
+  }, [stories]);
 
-  const { dataContent } = useDrawerContext()
+  const { dataContent } = useDrawerContext();
 
   return (
-    <main className='p-4 md:ml-64 relative h-screen'>
-      {loading || storyList.length === 0 && <HNLoader />}
+    <main className="relative h-screen w-full overflow-y-auto">
+      {loading || (storyList.length === 0 && <HNLoader />)}
       {storyList && (
-        <div className='space-y-3'>
+        <div className="space-y-3">
           {storyList.map((id, idx) => (
             <Story key={id} id={id} index={idx + 1} />
           ))}
@@ -59,20 +63,18 @@ const Asks: FC = () => {
       <div ref={observerElement}></div>
       <HNDrawer>
         <div className="divide-y space-y-4">
-          {
-            dataContent && (<Story id={dataContent?.id} />)
-          }
+          {dataContent && <Story id={dataContent?.id} />}
           {dataContent?.children?.map((element) => {
             return (
               <div key={element.id}>
                 <Comment comment={element} />
               </div>
-            )
+            );
           })}
         </div>
       </HNDrawer>
     </main>
   );
-}
+};
 
 export default Asks;
