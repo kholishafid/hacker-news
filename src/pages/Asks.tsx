@@ -1,20 +1,27 @@
 import { FC } from "react";
 import { useEffect, useRef, useState } from "react";
-import Story from "../components/Story/HNStory";
-import { useFetch } from "../hooks/useFetch";
+import HNStory from "../components/Story/HNStory";
 import HNLoader from "../components/UI/HNLoader";
-import HNDrawer from "../components/UI/HNDrawer";
-import { useDrawerContext } from "../contexts/Drawer";
-import Comment from "../components/HNCommentBlock";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const Asks: FC = () => {
   const [storyList, setStoryList] = useState<number[]>([]);
 
+  const { pathname } = useLocation();
+
   const observerElement = useRef<HTMLDivElement>(null);
 
-  const { data: stories, loading } = useFetch<number[]>(
-    "https://hacker-news.firebaseio.com/v0/askstories.json?print=pretty"
-  );
+  const { data: stories } = useQuery({
+    queryKey: [pathname],
+    queryFn: () =>
+      axios
+        .get(
+          "https://hacker-news.firebaseio.com/v0/askstories.json?print=pretty"
+        )
+        .then((res) => res.data as number[]),
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -48,32 +55,25 @@ const Asks: FC = () => {
     setStoryList(stories?.slice(0, 20) || []);
   }, [stories]);
 
-  const { dataContent } = useDrawerContext();
+  if (storyList.length === 0) {
+    return (
+      <main className="relative">
+        <HNLoader />
+      </main>
+    );
+  }
 
   return (
-    <main className="relative h-screen w-full overflow-y-auto">
-      {loading || (storyList.length === 0 && <HNLoader />)}
+    <>
       {storyList && (
-        <div className="space-y-3">
+        <div>
           {storyList.map((id, idx) => (
-            <Story key={id} id={id} index={idx + 1} />
+            <HNStory key={id} id={id} index={idx + 1} />
           ))}
         </div>
       )}
       <div ref={observerElement}></div>
-      <HNDrawer>
-        <div className="divide-y space-y-4">
-          {dataContent && <Story id={dataContent?.id} />}
-          {dataContent?.children?.map((element) => {
-            return (
-              <div key={element.id}>
-                <Comment comment={element} />
-              </div>
-            );
-          })}
-        </div>
-      </HNDrawer>
-    </main>
+    </>
   );
 };
 

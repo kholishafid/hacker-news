@@ -41,7 +41,7 @@ const HNStory: FC<StoryProps> = ({ id, comment = true, points = true }) => {
 
   if (isLoading)
     return (
-      <div className="border-b border-gray-200 p-4 px-6 pb-6">
+      <div className="border-b border-gray-200 p-6">
         <Skeleton className="w-full h-6 rounded" />
         <Skeleton className="w-14 h-3 mt-2 rounded" />
         <div className="flex gap-2 mt-2 rounded">
@@ -57,7 +57,7 @@ const HNStory: FC<StoryProps> = ({ id, comment = true, points = true }) => {
 
   return (
     <div
-      className="border-b border-gray-200 p-4 px-6 pb-6 flex cursor-pointer"
+      className="border-b border-gray-200 p-6 flex cursor-pointer"
       onClick={() => navigate(`/story/${story.id}`)}
     >
       <div className="w-full">
@@ -67,20 +67,24 @@ const HNStory: FC<StoryProps> = ({ id, comment = true, points = true }) => {
           </HNModal>
           <HNStoryTime unix={story.created_at_i} />
         </div>
-        <div className="group relative w-fit mb-4">
+        <div className="group relative w-fit">
           <HNStoryTitle className="mr-2" title={story.title} url={story.url} />
-          <HNBadge className="hidden group-hover:flex absolute left-[100%] top-0.5">
-            visit
-          </HNBadge>
-        </div>
-        <div className="flex gap-6">
-          {points && <HNStoryPoints points={story.points} />}
-          {comment && (
-            <HNStoryCommentCount
-              commentCount={(story.children && story.children.length) ?? 0}
-            />
+          {story.url && (
+            <HNBadge className="hidden group-hover:flex absolute left-[100%] top-0.5">
+              visit
+            </HNBadge>
           )}
         </div>
+        {(comment || points) && (
+          <div className="flex gap-6 mt-4">
+            {points && <HNStoryPoints points={story.points} />}
+            {comment && (
+              <HNStoryCommentCount
+                commentCount={(story.children && story.children.length) ?? 0}
+              />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

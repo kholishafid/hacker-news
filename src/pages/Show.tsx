@@ -1,23 +1,26 @@
 import { FC } from "react";
 import { useEffect, useRef, useState } from "react";
-import Story from "../components/Story/HNStory";
-import { useFetch } from "../hooks/useFetch";
 import HNLoader from "../components/UI/HNLoader";
-import HNDrawer from "../components/UI/HNDrawer";
-import { useDrawerContext } from "../contexts/Drawer";
-import Comment from "../components/HNCommentBlock";
-import HNShowStory from "../components/HNShowStory";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import HNStory from "../components/Story/HNStory";
+import { useLocation } from "react-router-dom";
 
 const Show: FC = () => {
   const [storyList, setStoryList] = useState<number[]>([]);
 
   const observerElement = useRef<HTMLDivElement>(null);
+  const { pathname } = useLocation();
 
-  const { data: stories, loading } = useFetch<number[]>(
-    "https://hacker-news.firebaseio.com/v0/showstories.json?print=pretty"
-  );
-
-  const { dataContent } = useDrawerContext();
+  const { data: stories } = useQuery({
+    queryKey: [pathname],
+    queryFn: () =>
+      axios
+        .get(
+          "https://hacker-news.firebaseio.com/v0/showstories.json?print=pretty"
+        )
+        .then((res) => res.data as number[]),
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -51,48 +54,25 @@ const Show: FC = () => {
     setStoryList(stories?.slice(0, 20) || []);
   }, [stories]);
 
+  if (storyList.length === 0) {
+    return (
+      <main className="relative">
+        <HNLoader />
+      </main>
+    );
+  }
+
   return (
-    <main className="relative h-screen w-full overflow-y-auto">
-      {loading || (storyList.length === 0 && <HNLoader />)}
+    <>
       {storyList && (
-        <div className="space-y-3">
+        <div>
           {storyList.map((id, idx) => (
-            <HNShowStory key={id} id={id} index={idx + 1} />
+            <HNStory key={id} id={id} index={idx + 1} />
           ))}
         </div>
       )}
       <div ref={observerElement}></div>
-      <HNDrawer>
-        <div className="divide-y space-y-4">
-          {dataContent && (
-            <>
-              <Story id={dataContent?.id} comment={false} points={false} />
-              <div className="p-4 pb-0">
-                <p className="text-gray-700 text-sm">
-                  Link :{" "}
-                  <a href={dataContent?.url} target="_blank">
-                    {dataContent?.url}
-                  </a>
-                </p>
-                {dataContent?.text && (
-                  <p
-                    dangerouslySetInnerHTML={{ __html: dataContent.text }}
-                    className="whitespace-normal font-sans text-gray-700 leading-7 mt-4"
-                  ></p>
-                )}
-              </div>
-            </>
-          )}
-          {dataContent?.children?.map((element) => {
-            return (
-              <div key={element.id}>
-                <Comment comment={element} />
-              </div>
-            );
-          })}
-        </div>
-      </HNDrawer>
-    </main>
+    </>
   );
 };
 

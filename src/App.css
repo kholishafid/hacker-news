@@ -1,0 +1,9 @@
+#main-app::-webkit-scrollbar {
+  display: none;
+}
+#main-app {
+  -ms-overflow-style: none;
+}
+#main-app {
+  scrollbar-width: none;
+}

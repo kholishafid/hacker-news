@@ -27,8 +27,8 @@ const HNSidebar: FC<HNSidebarProps> = ({ menuList }) => {
           return (
             <Link
               to={item.path}
-              className={`py-2 px-3 font-medium rounded cursor-pointer flex gap-3 items-center text-gray-700 decoration-slate-600 ${
-                location.pathname === item.path ? "underline" : ""
+              className={`py-2 px-3 rounded cursor-pointer flex gap-3 items-center decoration-slate-600 ${
+                location.pathname === item.path ? "font-semibold" : ""
               }`}
               key={item.label}
             >

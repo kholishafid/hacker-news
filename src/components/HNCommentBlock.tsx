@@ -26,11 +26,19 @@ export const CommentText = ({
     e.stopPropagation();
     setShow(!show);
   };
+
+  const handleArticleClick = (e: React.MouseEvent) => {
+    if (e.target instanceof HTMLAnchorElement) {
+      e.stopPropagation();
+    }
+  };
+
   return (
     <div>
       <article
         className="prose"
         dangerouslySetInnerHTML={{ __html: show ? text : minText }}
+        onClick={handleArticleClick}
       ></article>
       {text.length > 200 && (
         <span

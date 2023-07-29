@@ -1,17 +1,27 @@
 import { FC } from "react";
 import { useEffect, useRef, useState } from "react";
-import Story from "../components/Story/HNStory";
-import { useFetch } from "../hooks/useFetch";
 import HNLoader from "../components/UI/HNLoader";
+import HNStory from "../components/Story/HNStory";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
 
 const Jobs: FC = () => {
   const [storyList, setStoryList] = useState<number[]>([]);
 
   const observerElement = useRef<HTMLDivElement>(null);
 
-  const { data: stories, loading } = useFetch<number[]>(
-    "https://hacker-news.firebaseio.com/v0/jobstories.json?print=pretty"
-  );
+  const { pathname } = useLocation();
+
+  const { data: stories } = useQuery({
+    queryKey: [pathname],
+    queryFn: () =>
+      axios
+        .get(
+          "https://hacker-news.firebaseio.com/v0/jobstories.json?print=pretty"
+        )
+        .then((res) => res.data as number[]),
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -45,13 +55,20 @@ const Jobs: FC = () => {
     setStoryList(stories?.slice(0, 20) || []);
   }, [stories]);
 
+  if (storyList.length === 0) {
+    return (
+      <main className="relative">
+        <HNLoader />
+      </main>
+    );
+  }
+
   return (
-    <main className="relative h-screen w-full overflow-y-auto">
-      {loading || (storyList.length === 0 && <HNLoader />)}
+    <>
       {storyList && (
-        <div className="space-y-3">
+        <div>
           {storyList.map((id, idx) => (
-            <Story
+            <HNStory
               key={id}
               id={id}
               index={idx + 1}
@@ -62,7 +79,7 @@ const Jobs: FC = () => {
         </div>
       )}
       <div ref={observerElement}></div>
-    </main>
+    </>
   );
 };
 

@@ -26,14 +26,29 @@ const StoryParent = ({ story }: { story: StoryTypesInterface }) => {
           </HNModal>
           <HNStoryTime unix={story.created_at_i} />
         </div>
-        <div className="mb-2.5">
+        <div className="relative w-fit">
           {story.type === "comment" ? (
             <CommentText text={story.text ?? ""} full={true} />
           ) : (
-            <HNStoryTitle title={story.title} />
+            <>
+              <HNStoryTitle
+                url={story.url}
+                title={story.title}
+                className="mr-2"
+              />
+              {story.url && (
+                <HNBadge className="group-hover:flex absolute left-[100%] top-0.5">
+                  visit
+                </HNBadge>
+              )}
+              {story.text && (
+                <div className="mt-4">
+                  <CommentText text={story.text} />
+                </div>
+              )}
+            </>
           )}
         </div>
-        <HNBadge>Visit</HNBadge>
       </div>
       <div className="py-4 px-6 border-b flex gap-4">
         <HNStoryPoints points={story.points} />
@@ -66,7 +81,7 @@ const Story = () => {
   if (!story) return null;
 
   return (
-    <main className="h-full w-full overflow-y-auto">
+    <>
       <StoryParent story={story} />
       {story.children && story.children?.length > 0 && (
         <div className="divide-y">
@@ -75,7 +90,7 @@ const Story = () => {
           ))}
         </div>
       )}
-    </main>
+    </>
   );
 };
 
