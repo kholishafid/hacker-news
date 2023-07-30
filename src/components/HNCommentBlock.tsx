@@ -39,6 +39,7 @@ export const CommentText = ({
         className="prose"
         dangerouslySetInnerHTML={{ __html: show ? text : minText }}
         onClick={handleArticleClick}
+        onSelect={(e) => e.stopPropagation()}
       ></article>
       {text.length > 200 && (
         <span
