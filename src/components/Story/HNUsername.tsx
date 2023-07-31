@@ -10,7 +10,7 @@ const HNUsername = ({
   return (
     <div
       className={cn([
-        "flex gap-1  items-center hover:underline cursor-pointer",
+        "flex gap-1  items-center hover:underline md:cursor-pointer",
         className,
       ])}
     >

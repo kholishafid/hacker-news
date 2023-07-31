@@ -37,8 +37,8 @@ const StoryParent = ({ story }: { story: StoryTypesInterface }) => {
                 className="mr-2"
               />
               {story.url && (
-                <HNBadge className="group-hover:flex absolute left-[100%] top-0.5">
-                  visit
+                <HNBadge className="group-hover:flex md:absolute left-[100%] top-0.5">
+                  <a href={story.url}>visit</a>
                 </HNBadge>
               )}
               {story.text && (

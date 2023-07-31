@@ -49,7 +49,7 @@ const Asks: FC = () => {
         observer.unobserve(observerElementCurrent);
       }
     };
-  }, [observerElement, stories]);
+  }, [storyList, stories]);
 
   useEffect(() => {
     setStoryList(stories?.slice(0, 20) || []);

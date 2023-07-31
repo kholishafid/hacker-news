@@ -43,7 +43,7 @@ export const CommentText = ({
       ></article>
       {text.length > 200 && (
         <span
-          className="text-xs font-medium cursor-pointer underline "
+          className="text-xs font-medium md:cursor-pointer underline "
           onClick={handleShow}
         >
           {show ? "read less" : "read more"}
@@ -57,7 +57,7 @@ const HNCommentBlock: FC<HNCommentBlockProps> = ({ comment }) => {
   const navigate = useNavigate();
   return (
     <div
-      className="p-6 cursor-pointer"
+      className="p-6 md:cursor-pointer"
       onClick={() => navigate(`/story/${comment.id}`)}
     >
       <div className="flex gap-2 mb-2">

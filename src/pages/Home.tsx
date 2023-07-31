@@ -27,7 +27,10 @@ const Home: FC = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
+          console.log('tes');
           if (stories) {
+            console.log('tes');
+                        
             setStoryList((prev) => [
               ...prev,
               ...stories.slice(prev.length, prev.length + 20),
@@ -38,18 +41,24 @@ const Home: FC = () => {
       { threshold: 1 }
     );
 
+    const observeEl = document.getElementById('observe')
+
+    console.log(observeEl);
+    
+
     if (observerElement.current) {
       observer.observe(observerElement.current);
     }
 
     const observerElementCurrent = observerElement.current;
-
+    
     return () => {
       if (observerElementCurrent) {
         observer.unobserve(observerElementCurrent);
       }
     };
-  }, [observerElement, stories]);
+    
+  }, [storyList,stories]);
 
   useEffect(() => {
     setStoryList(stories?.slice(0, 20) || []);
@@ -72,7 +81,7 @@ const Home: FC = () => {
           ))}
         </div>
       )}
-      <div ref={observerElement}></div>
+      <div id="observe" ref={observerElement}></div>
     </>
   );
 };

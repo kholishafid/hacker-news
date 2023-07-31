@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, MouseEvent } from "react";
 import { cn } from "../../lib/utils";
 
 interface HNStoryTitleProps {
@@ -7,21 +7,28 @@ interface HNStoryTitleProps {
   className?: string;
 }
 
+
 const HNStoryTitle: FC<HNStoryTitleProps> = ({ url, title, className }) => {
+
+  const handleTitleClick = (e: MouseEvent) => {
+    e.stopPropagation()
+    if(url) {
+      window.open(url,'_blank')
+    }
+  }
+
   return (
     <>
       {url ? (
-        <a
-          href={url}
-          target="_blank"
-          onClick={(e) => e.stopPropagation()}
+        <span
+          onClick={handleTitleClick}
           className={cn([
             "group mb-1 inline hover:underline underline-offset-2 decoration-2 w-fit",
             className,
           ])}
         >
           {title}
-        </a>
+        </span>
       ) : (
         <span className="flex gap-2 group">{title}</span>
       )}

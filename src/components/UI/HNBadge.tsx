@@ -15,6 +15,7 @@ const HNBadge = ({
         "rounded-lg border px-2 transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-gray-600 text-white font-medium group-hover:decoration-0 hover:bg-gray-600/80 inline-flex items-center gap-1",
         className,
       ])}
+      onClick={(e) => e.stopPropagation()}
     >
       <span className="text-xs py-1">{children}</span>{" "}
       <ExternalLink size={16} />

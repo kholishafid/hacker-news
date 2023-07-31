@@ -56,7 +56,7 @@ const HNShowStory: FC<HNShowStoryProps> = ({ id, index }) => {
                     setDrawer(true)
                     setDataContent(story ?? undefined)
                   }}
-                  className="hover:underline underline-offset-2 decoration-2 decoration-sky-600 text-sky-500 cursor-pointer"
+                  className="hover:underline underline-offset-2 decoration-2 decoration-sky-600 text-sky-500 md:cursor-pointer"
                 >{story.title}</span>
               </h3>
               <div className="flex divide-x divide-gray-400">
@@ -65,7 +65,7 @@ const HNShowStory: FC<HNShowStoryProps> = ({ id, index }) => {
                   <span>{story.points}</span>
                 </div>
                 <HNModal trigger={(
-                  <div className='text-sm flex gap-1  items-center px-2 hover:underline cursor-pointer'>
+                  <div className='text-sm flex gap-1  items-center px-2 hover:underline md:cursor-pointer'>
                     <Icons.User className="w-4 h-4" />
                     <span>{story.author}</span>
                   </div>
@@ -78,7 +78,7 @@ const HNShowStory: FC<HNShowStoryProps> = ({ id, index }) => {
                 </div>
 
                 <div
-                  className='text-sm flex gap-1  items-center px-2 cursor-pointer hover:underline'
+                  className='text-sm flex gap-1  items-center px-2 md:cursor-pointer hover:underline'
                   onClick={() => {
                     setDrawer(true)
                     setDataContent(story ?? undefined)

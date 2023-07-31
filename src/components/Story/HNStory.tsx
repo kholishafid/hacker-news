@@ -57,11 +57,11 @@ const HNStory: FC<StoryProps> = ({ id, comment = true, points = true }) => {
 
   return (
     <div
-      className="border-b border-gray-200 p-6 flex cursor-pointer"
+      className="border-b border-gray-200 p-6 flex md:cursor-pointer"
       onClick={() => navigate(`/story/${story.id}`)}
     >
       <div className="w-full">
-        <div className="flex items-center mb-2 gap-1">
+        <div className="flex items-center mb-2 gap-1 ">
           <HNModal trigger={<HNUsername author={story.author} />}>
             <HNUserDetail id={story.author} />
           </HNModal>
@@ -70,8 +70,8 @@ const HNStory: FC<StoryProps> = ({ id, comment = true, points = true }) => {
         <div className="group relative w-fit">
           <HNStoryTitle className="mr-2" title={story.title} url={story.url} />
           {story.url && (
-            <HNBadge className="hidden group-hover:flex absolute left-[100%] top-0.5">
-              visit
+            <HNBadge className="md:hidden md:group-hover:flex md:absolute left-[100%] top-0.5">
+              <a href={story.url}>visit</a>
             </HNBadge>
           )}
         </div>
