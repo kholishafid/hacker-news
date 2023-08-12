@@ -3,8 +3,6 @@ import { StoryTypesInterface } from "../../types/story-types";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Skeleton from "../Skeleton";
-import HNModal from "../UI/HNModal";
-import HNUserDetail from "../HNUserDetail";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -19,7 +17,6 @@ dayjs.extend(relativeTime);
 
 interface StoryProps {
   id: number;
-  index?: number;
   comment?: boolean;
   points?: boolean;
   type?: string;
@@ -62,9 +59,7 @@ const HNStory: FC<StoryProps> = ({ id, comment = true, points = true }) => {
     >
       <div className="w-full">
         <div className="flex items-center mb-2 gap-1 ">
-          <HNModal trigger={<HNUsername author={story.author} />}>
-            <HNUserDetail id={story.author} />
-          </HNModal>
+          <HNUsername author={story.author} />
           <HNStoryTime unix={story.created_at_i} />
         </div>
         <div className="group relative w-fit">

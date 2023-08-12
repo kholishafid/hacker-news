@@ -18,7 +18,14 @@ const HNSidebar: FC<HNSidebarProps> = ({ menuList }) => {
   return (
     <aside className="max-sm:min-w-fit min-w-[200px] md:h-screen border-r border-gray-200 max-md:fixed inset-x-0 max-md:border-t bottom-0 bg-white z-20">
       <div className="h-20 px-3 flex items-center max-md:hidden">
-        <h3 className="max-md:text-xl text-2xl font-semibold">HN</h3>
+        {/* <h3 className="max-md:text-xl text-2xl font-semibold">HN</h3> */}
+        <img
+          src="/hackr.svg"
+          alt="Hackernews Logo"
+          height={54}
+          width={54}
+          title="Hacker News"
+        />
       </div>
 
       <ul className="space-y-3 max-md:flex justify-evenly max-md:space-y-0 max-md:py-3 max-md:h-16">

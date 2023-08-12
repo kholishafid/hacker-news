@@ -5,17 +5,16 @@ A Simple Hacker News Client built using [React](https://react.dev/), [Tailwind](
 
 This is my learning projects to get familiar with React
 
-
 ## Features
 
 - [x] 4 Feeds:
-    - Top Stories (Home)
-    - Ask Stories
-    - Job Stories
-    - Show Stories
+  - Top Stories (Home)
+  - Ask Stories
+  - Job Stories
+  - Show Stories
 - [x] Read Stories and comments
 
 ## TODO
+
 - [ ] Add Auth
 - [ ] Upvote, downvote, comment
-

@@ -1,7 +1,5 @@
 import { FC, useState } from "react";
 import { HackerNewsComment } from "../types/story-types";
-import HNModal from "./UI/HNModal";
-import HNUserDetail from "./HNUserDetail";
 import HNStoryTime from "./Story/HNStoryTime";
 import HNStoryCommentCount from "./Story/HNStoryCommentCount";
 import HNUsername from "./Story/HNUsername";
@@ -61,9 +59,7 @@ const HNCommentBlock: FC<HNCommentBlockProps> = ({ comment }) => {
       onClick={() => navigate(`/story/${comment.id}`)}
     >
       <div className="flex gap-2 mb-2">
-        <HNModal trigger={<HNUsername author={comment.author} />}>
-          <HNUserDetail id={comment.author} />
-        </HNModal>
+        <HNUsername author={comment.author} />
         <HNStoryTime unix={comment.created_at_i} />
       </div>
       <CommentText text={comment.text ?? ""} />
