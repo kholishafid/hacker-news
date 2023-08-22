@@ -27,18 +27,15 @@ export const CommentText = ({
   };
 
   const handleArticleClick = (e: React.MouseEvent) => {
-    if (e.target instanceof HTMLAnchorElement) {
-      e.stopPropagation();
-    }
+    e.stopPropagation();
   };
 
   return (
     <div>
       <article
-        className="prose"
+        className="prose prose-sm prose-a:text-blue-500 prose-a:font-normal cursor-auto"
         dangerouslySetInnerHTML={{ __html: show ? text : minText }}
         onClick={handleArticleClick}
-        onSelect={(e) => e.stopPropagation()}
       ></article>
       {text.length > 200 && (
         <div
