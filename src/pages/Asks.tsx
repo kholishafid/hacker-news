@@ -9,7 +9,7 @@ const Asks: FC = () => {
 
   const { storyList } = useSetup(
     observerElement,
-    '"https://hacker-news.firebaseio.com/v0/askstories.json?print=pretty"'
+    "https://hacker-news.firebaseio.com/v0/askstories.json?print=pretty"
   );
 
   if (storyList.length === 0) {

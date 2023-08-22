@@ -6,12 +6,11 @@ import Skeleton from "../Skeleton";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import HNStoryTitle from "./HNStoryTitle";
 import HNStoryTime from "./HNStoryTime";
 import HNUsername from "./HNUsername";
 import HNStoryPoints from "./HNStoryPoints";
 import HNStoryCommentCount from "./HNStoryCommentCount";
-import HNBadge from "../UI/HNBadge";
+import HNStoryBody from "./HNStoryContent";
 
 dayjs.extend(relativeTime);
 
@@ -62,14 +61,7 @@ const HNStory: FC<StoryProps> = ({ id, comment = true, points = true }) => {
           <HNUsername author={story.author} />
           <HNStoryTime unix={story.created_at_i} />
         </div>
-        <div className="group relative w-fit">
-          <HNStoryTitle className="mr-2" title={story.title} url={story.url} />
-          {story.url && (
-            <HNBadge className="md:hidden md:group-hover:flex md:absolute left-[100%] top-0.5">
-              <a href={story.url}>visit</a>
-            </HNBadge>
-          )}
-        </div>
+        <HNStoryBody type={story.type} url={story.url} text={story.text} title={story.title} />
         {(comment || points) && (
           <div className="flex gap-6 mt-4">
             {points && <HNStoryPoints points={story.points} />}

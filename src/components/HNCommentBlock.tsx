@@ -4,6 +4,7 @@ import HNStoryTime from "./Story/HNStoryTime";
 import HNStoryCommentCount from "./Story/HNStoryCommentCount";
 import HNUsername from "./Story/HNUsername";
 import { useNavigate } from "react-router-dom";
+import { MinusSquare, PlusSquare } from "lucide-react";
 
 interface HNCommentBlockProps {
   comment: HackerNewsComment;
@@ -40,12 +41,16 @@ export const CommentText = ({
         onSelect={(e) => e.stopPropagation()}
       ></article>
       {text.length > 200 && (
-        <span
-          className="text-xs font-medium md:cursor-pointer underline "
+        <div
+          className="text-xs md:cursor-pointer mt-2"
           onClick={handleShow}
         >
-          {show ? "read less" : "read more"}
-        </span>
+          {show ?
+            <span className="flex items-center border-b w-fit border-transparent hover:border-gray-400">read less <MinusSquare className='w-3.5 h-3.5 ml-1' /></span>
+            :
+            <span className="flex items-center border-b w-fit border-transparent hover:border-gray-400">read more <PlusSquare className='w-3.5 h-3.5 ml-1' /></span>
+          }
+        </div>
       )}
     </div>
   );
