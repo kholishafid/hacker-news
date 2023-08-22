@@ -13,7 +13,7 @@ const HNStoryTitle: FC<HNStoryTitleProps> = ({ url, title }) => {
       <h1 className="mb-1">
         {title}
       </h1>
-      <span className="text-sm">URL : <a href={url} className="text-blue-500 hover:underline">{url}</a></span>
+      <span className="text-sm">URL : <a href={url} target="_blank" onClick={(e) => e.stopPropagation()} className="text-blue-500 underline">{url}</a></span>
     </div>
   }
 
