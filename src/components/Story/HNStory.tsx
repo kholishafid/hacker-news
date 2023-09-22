@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { StoryTypesInterface } from "../../types/story-types";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
