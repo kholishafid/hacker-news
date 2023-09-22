@@ -21,7 +21,20 @@ interface StoryProps {
   type?: string;
 }
 
-const HNStory: FC<StoryProps> = ({ id, comment = true, points = true }) => {
+export const HNStoryLoader = () => {
+  return (
+    <div className="border-b border-gray-200 p-6">
+      <Skeleton className="w-full h-6 rounded" />
+      <Skeleton className="w-14 h-3 mt-2 rounded" />
+      <div className="flex gap-2 mt-2 rounded">
+        <Skeleton className="w-12 h-3 rounded" />
+        <Skeleton className="w-12 h-3 rounded" />
+      </div>
+    </div>
+  )
+}
+
+const HNStory = ({ id, comment = true, points = true }: StoryProps) => {
   const {
     data: story,
     isLoading,
@@ -30,22 +43,13 @@ const HNStory: FC<StoryProps> = ({ id, comment = true, points = true }) => {
     queryKey: [id],
     queryFn: () =>
       axios
-        .get(`https://hn.algolia.com/api/v1/items/${id}`)
+        .get(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
         .then((res) => res.data as StoryTypesInterface),
   });
   const navigate = useNavigate();
 
   if (isLoading)
-    return (
-      <div className="border-b border-gray-200 p-6">
-        <Skeleton className="w-full h-6 rounded" />
-        <Skeleton className="w-14 h-3 mt-2 rounded" />
-        <div className="flex gap-2 mt-2 rounded">
-          <Skeleton className="w-12 h-3 rounded" />
-          <Skeleton className="w-12 h-3 rounded" />
-        </div>
-      </div>
-    );
+    return <HNStoryLoader />
 
   if (error) return <div>There was an error</div>;
 
@@ -58,16 +62,16 @@ const HNStory: FC<StoryProps> = ({ id, comment = true, points = true }) => {
     >
       <div className="w-full">
         <div className="flex items-center mb-2 gap-1 ">
-          <HNUsername author={story.author} />
-          <HNStoryTime unix={story.created_at_i} />
+          <HNUsername author={story.by} />
+          <HNStoryTime unix={story.time} />
         </div>
         <HNStoryBody type={story.type} url={story.url} text={story.text} title={story.title} />
         {(comment || points) && (
           <div className="flex gap-6 mt-4">
-            {points && <HNStoryPoints points={story.points} />}
+            {points && <HNStoryPoints points={story.score} />}
             {comment && (
               <HNStoryCommentCount
-                commentCount={(story.children && story.children.length) ?? 0}
+                commentCount={(story.kids && story.kids.length) ?? 0}
               />
             )}
           </div>

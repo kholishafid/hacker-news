@@ -53,7 +53,7 @@ const Story = () => {
     queryKey: [id],
     queryFn: () =>
       axios
-        .get(`https://hn.algolia.com/api/v1/items/${id}`)
+        .get(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
         .then((res) => res.data as StoryTypesInterface),
   });
 
@@ -64,8 +64,8 @@ const Story = () => {
   return (
     <>
       <StoryParent
-        username={<HNUsername author={story.author} />}
-        time={<HNStoryTime unix={story.created_at_i} />}
+        username={<HNUsername author={story.by} />}
+        time={<HNStoryTime unix={story.time} />}
         content={
           <HNStoryBody
             type={story.type}
@@ -74,15 +74,17 @@ const Story = () => {
             url={story.url}
           />
         }
-        point={<HNStoryPoints points={story.points} />}
+        point={<HNStoryPoints points={story.score} />}
         commentCount={
-          <HNStoryCommentCount commentCount={story.children?.length ?? 0} />
+          <HNStoryCommentCount commentCount={story.kids?.length ?? 0} />
         }
       />
-      {story.children && story.children?.length > 0 && (
+      {story.kids && story.kids?.length > 0 && (
         <div className="divide-y">
-          {story.children.map((child) => (
-            <HNCommentBlock key={child.id} comment={child} />
+          {story.kids.length > 10 ? story.kids.slice(0, 10).map((i) => (
+            <HNCommentBlock key={i} comment={i} />
+          )) : story.kids.map((i) => (
+            <HNCommentBlock key={i} comment={i} />
           ))}
         </div>
       )}

@@ -1,13 +1,16 @@
 import { FC, useState } from "react";
-import { HackerNewsComment } from "../types/story-types";
 import HNStoryTime from "./Story/HNStoryTime";
 import HNStoryCommentCount from "./Story/HNStoryCommentCount";
 import HNUsername from "./Story/HNUsername";
 import { useNavigate } from "react-router-dom";
 import { MinusSquare, PlusSquare } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { HackerNewsComment } from "../types/story-types";
+import { HNStoryLoader } from "./Story/HNStory";
 
 interface HNCommentBlockProps {
-  comment: HackerNewsComment;
+  comment: number;
 }
 
 export const CommentText = ({
@@ -55,19 +58,34 @@ export const CommentText = ({
 
 const HNCommentBlock: FC<HNCommentBlockProps> = ({ comment }) => {
   const navigate = useNavigate();
+
+  const { data, isLoading } = useQuery({
+    queryKey: [comment],
+    queryFn: () =>
+      axios
+        .get(
+          `https://hacker-news.firebaseio.com/v0/item/${comment}.json`
+        )
+        .then((res) => res.data as HackerNewsComment),
+  });
+
+  if (data === undefined || isLoading) {
+    return <HNStoryLoader />
+  }
+
   return (
     <div
       className="p-6 md:cursor-pointer"
-      onClick={() => navigate(`/story/${comment.id}`)}
+      onClick={() => navigate(`/story/${comment}`)}
     >
       <div className="flex gap-2 mb-2">
-        <HNUsername author={comment.author} />
-        <HNStoryTime unix={comment.created_at_i} />
+        <HNUsername author={data.by} />
+        <HNStoryTime unix={data.time} />
       </div>
-      <CommentText text={comment.text ?? ""} />
-      {comment.children && (
+      <CommentText text={data.text ?? ""} />
+      {data.kids && (
         <div className="mt-4">
-          <HNStoryCommentCount commentCount={comment.children.length} />
+          <HNStoryCommentCount commentCount={data.kids.length} />
         </div>
       )}
     </div>
