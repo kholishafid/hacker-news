@@ -10,8 +10,9 @@ import HNCommentBlock from "../components/HNCommentBlock";
 import HNUsername from "../components/Story/HNUsername";
 import HNLoader from "../components/UI/HNLoader";
 import HNStoryTime from "../components/Story/HNStoryTime";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import HNStoryBody from "../components/Story/HNStoryContent";
+import useSetup from "../hooks/useSetup";
 dayjs.extend(relativeTime);
 
 interface StoryParentProps {
@@ -47,6 +48,8 @@ const StoryParent: FC<StoryParentProps> = ({
 };
 
 const Story = () => {
+  const [commentList, setCommentList] = useState<number[]>([])
+
   const { id } = useParams();
 
   const { data: story, isLoading } = useQuery({
@@ -56,6 +59,48 @@ const Story = () => {
         .get(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
         .then((res) => res.data as StoryTypesInterface),
   });
+
+  const observerElement = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (story?.kids && story.kids.length > 10) {
+      setCommentList(story?.kids?.slice(0, 10))
+    } else {
+      if (story?.kids) {
+        setCommentList(story.kids)
+      }
+    }
+  }, [story])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && story) {
+          if (story.kids && story.kids !== undefined && story.kids.length > 0) {
+            const newAr = [...story.kids.slice(commentList.length, commentList.length + 10)]
+
+            setCommentList((prev) => [
+              ...prev,
+              ...newAr
+            ])
+          }
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (observerElement.current) {
+      observer.observe(observerElement.current);
+    }
+
+    const observerElementCurrent = observerElement.current;
+
+    return () => {
+      if (observerElementCurrent) {
+        observer.unobserve(observerElementCurrent);
+      }
+    };
+  }, [commentList, story, observerElement]);
 
   if (isLoading) return <HNLoader />;
 
@@ -79,15 +124,14 @@ const Story = () => {
           <HNStoryCommentCount commentCount={story.kids?.length ?? 0} />
         }
       />
-      {story.kids && story.kids?.length > 0 && (
-        <div className="divide-y">
-          {story.kids.length > 10 ? story.kids.slice(0, 10).map((i) => (
-            <HNCommentBlock key={i} comment={i} />
-          )) : story.kids.map((i) => (
-            <HNCommentBlock key={i} comment={i} />
-          ))}
-        </div>
-      )}
+      <div className="divide-y">
+        {commentList &&
+          commentList.map((id, i) => {
+            return <HNCommentBlock comment={id} key={i} />
+          })
+        }
+      </div>
+      <div ref={observerElement} />
     </>
   );
 };
