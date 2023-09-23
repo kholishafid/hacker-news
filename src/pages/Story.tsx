@@ -12,7 +12,6 @@ import HNLoader from "../components/UI/HNLoader";
 import HNStoryTime from "../components/Story/HNStoryTime";
 import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import HNStoryBody from "../components/Story/HNStoryContent";
-import useSetup from "../hooks/useSetup";
 dayjs.extend(relativeTime);
 
 interface StoryParentProps {
