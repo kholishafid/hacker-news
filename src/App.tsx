@@ -48,12 +48,13 @@ const AppHeader = () => {
 
 function App() {
   const queryClient = new QueryClient();
+  // useTheme()
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="max-w-5xl mx-auto flex max-sm:flex-col-reverse h-screen overflow-hidden max-sm:overflow-auto">
         <HNSidebar menuList={sidebarMenu} />
-        <div className="w-full border-r relative flex flex-1 h-full">
+        <div className="w-full relative flex flex-1 h-full border-r overflow-x-hidden">
           <AppHeader />
           <main
             className="relative w-full overflow-y-auto flex-1 pt-20 max-md:pb-14"

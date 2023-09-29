@@ -60,8 +60,8 @@ const HNStory = ({ id, comment = true, points = true }: StoryProps) => {
       onClick={() => navigate(`/story/${story.id}`)}
     >
       <div className="w-full">
-        <div className="flex items-center mb-2 gap-1 ">
-          <HNUsername author={story.by} />
+        <div className="items-center mb-4 gap-1">
+          <HNUsername author={story.by} className="mb-1" />
           <HNStoryTime unix={story.time} />
         </div>
         <HNStoryBody type={story.type} url={story.url} text={story.text} title={story.title} />

@@ -13,7 +13,7 @@ const HNStoryTime = ({
 }) => {
   return (
     <div className={cn(["text-xs flex gap-1  items-center", className])}>
-      <Clock4 className="w-4 h-4" />
+      <Clock4 className="w-3 h-3" />
       <span>{dayjs.unix(unix).fromNow()}</span>
     </div>
   );

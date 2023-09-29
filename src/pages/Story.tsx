@@ -32,7 +32,7 @@ const StoryParent: FC<StoryParentProps> = ({
   return (
     <>
       <div className="p-6 border-b">
-        <div className="flex items-center mb-2 gap-1">
+        <div className="mb-4 gap-1">
           {username}
           {time}
         </div>
@@ -108,7 +108,7 @@ const Story = () => {
   return (
     <>
       <StoryParent
-        username={<HNUsername author={story.by} />}
+        username={<HNUsername author={story.by} className="mb-1" />}
         time={<HNStoryTime unix={story.time} />}
         content={
           <HNStoryBody
@@ -118,9 +118,9 @@ const Story = () => {
             url={story.url}
           />
         }
-        point={<HNStoryPoints points={story.score} />}
+        point={story.type === 'story' ? <HNStoryPoints points={story.score} /> : null}
         commentCount={
-          <HNStoryCommentCount commentCount={story.kids?.length ?? 0} />
+          <HNStoryCommentCount commentCount={story.kids?.length ?? 0} className="hover:no-underline" />
         }
       />
       <div className="divide-y">

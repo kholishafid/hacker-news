@@ -7,6 +7,7 @@ export interface HackerNewsComment {
   score: number;
   parent: number | null;
   kids?: HackerNewsComment[];
+  deleted?: true
 }
 
 export interface StoryTypesInterface {

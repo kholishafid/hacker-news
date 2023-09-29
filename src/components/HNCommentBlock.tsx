@@ -3,7 +3,6 @@ import HNStoryTime from "./Story/HNStoryTime";
 import HNStoryCommentCount from "./Story/HNStoryCommentCount";
 import HNUsername from "./Story/HNUsername";
 import { useNavigate } from "react-router-dom";
-import { MinusSquare, PlusSquare } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { HackerNewsComment } from "../types/story-types";
@@ -36,19 +35,19 @@ export const CommentText = ({
   return (
     <div>
       <article
-        className="prose prose-sm prose-a:text-blue-500 prose-a:font-normal cursor-auto"
+        className="prose prose-slate prose-a:text-blue-500 prose-a:font-normal"
         dangerouslySetInnerHTML={{ __html: show ? text : minText }}
         onClick={handleArticleClick}
       ></article>
       {text.length > 200 && (
         <div
-          className="text-xs md:cursor-pointer mt-2"
+          className="text-xs md:cursor-pointer mt-1 inline-block"
           onClick={handleShow}
         >
           {show ?
-            <span className="flex items-center border-b w-fit border-transparent hover:border-gray-400">read less <MinusSquare className='w-3.5 h-3.5 ml-1' /></span>
+            <span className="flex items-center border-b w-fit border-transparent font-semibold">read less </span>
             :
-            <span className="flex items-center border-b w-fit border-transparent hover:border-gray-400">read more <PlusSquare className='w-3.5 h-3.5 ml-1' /></span>
+            <span className="flex items-center border-b w-fit border-transparent font-semibold">read more </span>
           }
         </div>
       )}
@@ -75,19 +74,19 @@ const HNCommentBlock: FC<HNCommentBlockProps> = ({ comment }) => {
 
   return (
     <div
-      className="p-6 md:cursor-pointer"
-      onClick={() => navigate(`/story/${comment}`)}
-    >
-      <div className="flex gap-2 mb-2">
-        <HNUsername author={data.by} />
+      className="p-6">
+      <div className="gap-2 mb-4">
+        <HNUsername author={data.by} className="mb-1" />
         <HNStoryTime unix={data.time} />
       </div>
-      <CommentText text={data.text ?? ""} />
-      {data.kids && (
-        <div className="mt-4">
+      {
+        !data.deleted ? <CommentText text={data.text ?? ""} /> : '[Deleted]'
+      }
+      {data.kids ? (
+        <div className="mt-4" onClick={() => navigate(`/story/${comment}`)} >
           <HNStoryCommentCount commentCount={data.kids.length} />
         </div>
-      )}
+      ) : null}
     </div>
   );
 };
