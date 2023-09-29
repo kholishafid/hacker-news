@@ -1,4 +1,5 @@
 import { FC, ReactNode } from "react";
+import { cn } from "../../lib/utils";
 
 interface HNCardProps {
   children: ReactNode
@@ -7,7 +8,7 @@ interface HNCardProps {
 
 const HNCard: FC<HNCardProps> = ({ children, className }) => {
   return (
-    <div className={`border p-4 rounded shadow-sm ${className}`}>
+    <div className={cn(['border p-4 rounded shadow-sm', className])}>
       {children}
     </div>
   );
