@@ -22,7 +22,7 @@ interface StoryProps {
 
 export const HNStoryLoader = () => {
   return (
-    <div className="border-b border-gray-200 p-6">
+    <div className="border-b border-gray-200 dark:border-neutral-700 p-6">
       <Skeleton className="w-full h-6 rounded" />
       <Skeleton className="w-14 h-3 mt-2 rounded" />
       <div className="flex gap-2 mt-2 rounded">
@@ -56,7 +56,7 @@ const HNStory = ({ id, comment = true, points = true }: StoryProps) => {
 
   return (
     <div
-      className="border-b border-gray-200 p-6 flex md:cursor-pointer"
+      className="border-b border-gray-200 dark:border-neutral-700 p-6 flex md:cursor-pointer"
       onClick={() => navigate(`/story/${story.id}`)}
     >
       <div className="w-full">

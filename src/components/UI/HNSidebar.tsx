@@ -16,7 +16,7 @@ const HNSidebar: FC<HNSidebarProps> = ({ menuList }) => {
   const location = useLocation();
 
   return (
-    <aside className="max-sm:min-w-fit min-w-[200px] md:h-screen border-r border-gray-200 max-md:fixed inset-x-0 max-md:border-t bottom-0 bg-white dark:bg-dark z-20">
+    <aside className="max-sm:min-w-fit min-w-[200px] md:h-screen border-r border-gray-200 max-md:fixed inset-x-0 max-md:border-t bottom-0 bg-white dark:bg-dark z-20 dark:border-neutral-700">
       <div className="h-20 px-3 flex items-center max-md:hidden">
         {/* <h3 className="max-md:text-xl text-2xl font-semibold">HN</h3> */}
         <img

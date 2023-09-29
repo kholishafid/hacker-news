@@ -1,9 +1,25 @@
+:root {
+  --background: #121212;
+}
+
 #main-app::-webkit-scrollbar {
   display: none;
 }
+
 #main-app {
   -ms-overflow-style: none;
 }
+
 #main-app {
   scrollbar-width: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background: #121212;
+  }
+
+  #hackerns-logo {
+    filter: grayscale(1) invert(1);
+  }
 }

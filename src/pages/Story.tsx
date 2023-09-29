@@ -31,14 +31,14 @@ const StoryParent: FC<StoryParentProps> = ({
 }) => {
   return (
     <>
-      <div className="p-6 border-b">
+      <div className="p-6 border-b dark:border-neutral-700">
         <div className="mb-4 gap-1">
           {username}
           {time}
         </div>
         <div className="relative w-fit">{content}</div>
       </div>
-      <div className="py-4 px-6 border-b flex gap-4">
+      <div className="py-4 px-6 border-b flex gap-4 dark:border-neutral-700">
         {point}
         {commentCount}
       </div>
@@ -123,7 +123,7 @@ const Story = () => {
           <HNStoryCommentCount commentCount={story.kids?.length ?? 0} className="hover:no-underline" />
         }
       />
-      <div className="divide-y">
+      <div className="divide-y dark:divide-neutral-700">
         {commentList &&
           commentList.map((id, i) => {
             return <HNCommentBlock comment={id} key={i} />

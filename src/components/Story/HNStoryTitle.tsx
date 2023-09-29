@@ -9,7 +9,7 @@ interface HNStoryTitleProps {
 
 const HNStoryTitle: FC<HNStoryTitleProps> = ({ url, title }) => {
   if (url && url !== '') {
-    return <div>
+    return <div className="dark:text-white">
       <h1 className="mb-1">
         {title}
       </h1>
@@ -18,7 +18,7 @@ const HNStoryTitle: FC<HNStoryTitleProps> = ({ url, title }) => {
   }
 
   return (
-    <h1>{title}</h1>
+    <h1 className="dark:text-white">{title}</h1>
   );
 };
 

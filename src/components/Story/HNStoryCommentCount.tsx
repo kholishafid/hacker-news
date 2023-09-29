@@ -4,7 +4,7 @@ import { cn } from "../../lib/utils";
 const HNStoryCommentCount = ({ commentCount, className }: { commentCount: number, className?: string }) => {
   return (
     <div
-      className={cn(['text-xs flex items-center hover:underline w-fit cursor-pointer', className])}
+      className={cn(['text-xs flex items-center hover:underline w-fit cursor-pointer dark:text-white', className])}
     >
       <MessageSquare className="w-4 h-4 mr-1" />
       <span>{commentCount} reply</span>

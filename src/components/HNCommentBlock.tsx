@@ -35,19 +35,19 @@ export const CommentText = ({
   return (
     <div>
       <article
-        className="prose prose-slate prose-a:text-blue-500 prose-a:font-normal"
+        className="prose prose-slate prose-a:text-blue-500 prose-a:font-normal dark:prose-invert"
         dangerouslySetInnerHTML={{ __html: show ? text : minText }}
         onClick={handleArticleClick}
       ></article>
       {text.length > 200 && (
         <div
-          className="text-xs md:cursor-pointer mt-1 inline-block"
+          className="text-xs md:cursor-pointer mt-1 inline-block dark:text-white"
           onClick={handleShow}
         >
           {show ?
-            <span className="flex items-center border-b w-fit border-transparent font-semibold">read less </span>
+            <span className="flex items-center w-fit font-semibold">read less </span>
             :
-            <span className="flex items-center border-b w-fit border-transparent font-semibold">read more </span>
+            <span className="flex items-center w-fit font-semibold">read more </span>
           }
         </div>
       )}

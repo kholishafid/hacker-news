@@ -33,7 +33,7 @@ const AppHeader = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="p-6 border-b max-sm:fixed absolute top-0 inset-x-0 bg-white/80 backdrop-blur-sm z-10 flex items-center">
+    <header className="p-6 border-b max-sm:fixed absolute top-0 inset-x-0 bg-white/80 backdrop-blur-sm z-10 flex items-center dark:bg-black/50 dark:text-white dark:border-neutral-700">
       {id && (
         <ArrowLeft
           size={24}
@@ -54,7 +54,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div className="max-w-5xl mx-auto flex max-sm:flex-col-reverse h-screen overflow-hidden max-sm:overflow-auto">
         <HNSidebar menuList={sidebarMenu} />
-        <div className="w-full relative flex flex-1 h-full border-r overflow-x-hidden">
+        <div className="w-full relative flex flex-1 h-full border-r overflow-x-hidden dark:border-neutral-700">
           <AppHeader />
           <main
             className="relative w-full overflow-y-auto flex-1 pt-20 max-md:pb-14"
