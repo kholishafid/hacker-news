@@ -1,28 +1,28 @@
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import "./App.css";
+import HNSidebar, { MenuItem } from "./components/HNSidebar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import HNSidebar, { MenuItem } from "./components/UI/HNSidebar";
-import { ArrowLeft } from "lucide-react";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { ThemeProvider } from "./components/ThemeProvider";
+import "./App.css";
 
 const sidebarMenu: MenuItem[] = [
   {
-    label: "Home",
-    icon: "Home",
+    label: "Feed",
+    icon: "QueueList",
     path: "/",
   },
   {
     label: "Ask",
-    icon: "BadgeHelp",
+    icon: "QuestionMarkCircle",
     path: "/ask",
   },
   {
     label: "Job",
-    icon: "Contact2",
+    icon: "Briefcase",
     path: "/job",
   },
   {
     label: "Show",
-    icon: "Flame",
+    icon: "Megaphone",
     path: "/show",
   },
 ];
@@ -33,13 +33,19 @@ const AppHeader = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="p-6 border-b max-sm:fixed absolute top-0 inset-x-0 bg-white/80 backdrop-blur-sm z-10 flex items-center dark:bg-black/50 dark:text-white dark:border-neutral-700">
+    <header className="p-6 border-b max-sm:fixed absolute top-0 inset-x-0 bg-white/80 backdrop-blur-sm z-10 flex items-center dark:bg-neutral-800/50 dark:text-neutral-100 dark:border-neutral-700">
       {id && (
-        <ArrowLeft
-          size={24}
-          className="hover:bg-black/5 rounded-full w-7 h-7 p-1.5 md:cursor-pointer mr-4"
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-5 h-5 mr-2 cursor-pointer"
           onClick={() => navigate(-1)}
-        />
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
       )}
       <h3 className="font-medium text-lg">{pathname}</h3>
     </header>
@@ -48,22 +54,23 @@ const AppHeader = () => {
 
 function App() {
   const queryClient = new QueryClient();
-  // useTheme()
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="max-w-5xl mx-auto flex max-sm:flex-col-reverse h-screen overflow-hidden max-sm:overflow-auto">
-        <HNSidebar menuList={sidebarMenu} />
-        <div className="w-full relative flex flex-1 h-full border-r overflow-x-hidden dark:border-neutral-700">
-          <AppHeader />
-          <main
-            className="relative w-full overflow-y-auto flex-1 pt-20 max-md:pb-14"
-            id="main-app"
-          >
-            <Outlet />
-          </main>
+      <ThemeProvider defaultTheme="light" storageKey="ui-theme">
+        <div className="max-w-3xl mx-auto flex max-sm:flex-col-reverse h-screen max-sm:overflow-auto relative">
+          <HNSidebar menuList={sidebarMenu} />
+          <div className="w-full min-w-3xl relative flex flex-1 h-full border-r overflow-x-hidden dark:border-neutral-700">
+            <AppHeader />
+            <main
+              className="relative w-full overflow-y-auto flex-1 pt-20 max-md:pb-14 bg-white dark:bg-neutral-800"
+              id="main-app"
+            >
+              <Outlet />
+            </main>
+          </div>
         </div>
-      </div>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

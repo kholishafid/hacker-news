@@ -35,7 +35,7 @@ export const CommentText = ({
   return (
     <div>
       <article
-        className="prose prose-slate prose-a:text-blue-500 prose-a:font-normal dark:prose-invert"
+        className="prose prose-neutral prose-a:hover:text-amber-500 prose-a:font-normal prose-a:dark:text-neutral-100 dark:prose-invert"
         dangerouslySetInnerHTML={{ __html: show ? text : minText }}
         onClick={handleArticleClick}
       ></article>
@@ -45,9 +45,9 @@ export const CommentText = ({
           onClick={handleShow}
         >
           {show ?
-            <span className="flex items-center w-fit font-semibold">read less </span>
+            <span className="flex items-center w-fit">read less </span>
             :
-            <span className="flex items-center w-fit font-semibold">read more </span>
+            <span className="flex items-center w-fit">read more </span>
           }
         </div>
       )}
@@ -75,8 +75,9 @@ const HNCommentBlock: FC<HNCommentBlockProps> = ({ comment }) => {
   return (
     <div
       className="p-6">
-      <div className="gap-2 mb-4">
-        <HNUsername author={data.by} className="mb-1" />
+      <div className="flex items-center mb-2 gap-1">
+        <HNUsername author={data.by} />
+        <span className="text-neutral-200">·</span>
         <HNStoryTime unix={data.time} />
       </div>
       {

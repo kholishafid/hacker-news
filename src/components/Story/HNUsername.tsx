@@ -10,7 +10,7 @@ const HNUsername = ({
   return (
     <div
       className={cn([
-        "flex gap-1  items-center dark:text-white",
+        "flex gap-1  items-center text-neutral-600 dark:text-neutral-200",
         className,
       ])}
     >

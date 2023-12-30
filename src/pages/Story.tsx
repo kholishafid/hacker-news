@@ -8,10 +8,10 @@ import HNStoryPoints from "../components/Story/HNStoryPoints";
 import HNStoryCommentCount from "../components/Story/HNStoryCommentCount";
 import HNCommentBlock from "../components/HNCommentBlock";
 import HNUsername from "../components/Story/HNUsername";
-import HNLoader from "../components/UI/HNLoader";
 import HNStoryTime from "../components/Story/HNStoryTime";
 import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import HNStoryBody from "../components/Story/HNStoryContent";
+import Skeleton from "../components/Skeleton";
 dayjs.extend(relativeTime);
 
 interface StoryParentProps {
@@ -32,8 +32,9 @@ const StoryParent: FC<StoryParentProps> = ({
   return (
     <>
       <div className="p-6 border-b dark:border-neutral-700">
-        <div className="mb-4 gap-1">
+        <div className="flex items-center mb-2 gap-1">
           {username}
+          <span className="text-neutral-200">·</span>
           {time}
         </div>
         <div className="relative w-fit">{content}</div>
@@ -101,14 +102,25 @@ const Story = () => {
     };
   }, [commentList, story, observerElement]);
 
-  if (isLoading) return <HNLoader />;
+  if (isLoading) return (
+    <div className="animate-pulse">
+      <div className="p-6 border-b dark:border-neutral-700">
+        <Skeleton className="w-20 h-5 rounded-lg mb-2" />
+        <Skeleton className="w-96 h-5 rounded-lg" />
+      </div>
+      <div className="py-4 px-6 border-b flex gap-4 dark:border-neutral-700">
+        <Skeleton className="w-12 h-5 rounded-lg" />
+        <Skeleton className="w-12 h-5 rounded-lg" />
+      </div>
+    </div>
+  );
 
   if (!story) return null;
 
   return (
     <>
       <StoryParent
-        username={<HNUsername author={story.by} className="mb-1" />}
+        username={<HNUsername author={story.by} />}
         time={<HNStoryTime unix={story.time} />}
         content={
           <HNStoryBody

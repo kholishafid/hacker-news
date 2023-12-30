@@ -6,15 +6,22 @@ interface HNStoryTitleProps {
   className?: string;
 }
 
+const extractDomain = (url: string) => {
+  const parsedUrl = new URL(url);
+  return parsedUrl.hostname;
+};
+
 
 const HNStoryTitle: FC<HNStoryTitleProps> = ({ url, title }) => {
   if (url && url !== '') {
-    return <div className="dark:text-white">
+    return (
       <h1 className="mb-1">
-        {title}
+        <a href={url} target="_blank" onClick={(e) => e.stopPropagation()} className="text-neutral-900 dark:text-white hover:text-amber-500 mr-1.5 inline-flex flex-col">
+          <span>{title}</span>
+          <span className="text-neutral-500 dark:text-neutral-400 text-sm mt-1">({extractDomain(url)})</span>
+        </a>
       </h1>
-      <span className="text-sm">URL : <a href={url} target="_blank" onClick={(e) => e.stopPropagation()} className="text-blue-500 underline">{url}</a></span>
-    </div>
+    )
   }
 
   return (

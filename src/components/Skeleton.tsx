@@ -7,7 +7,7 @@ interface SkeletonProps {
 
 const Skeleton: FC<SkeletonProps> = ({ className }) => {
   return (
-    <div className={cn(['bg-black/10 animate-pulse dark:bg-white/10', className])} >
+    <div className={cn(['bg-black/10 dark:bg-white/10', className])} >
     </div>
   );
 }

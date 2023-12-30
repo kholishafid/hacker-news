@@ -23,11 +23,11 @@ interface StoryProps {
 export const HNStoryLoader = () => {
   return (
     <div className="border-b border-gray-200 dark:border-neutral-700 p-6">
-      <Skeleton className="w-full h-6 rounded" />
-      <Skeleton className="w-14 h-3 mt-2 rounded" />
-      <div className="flex gap-2 mt-2 rounded">
-        <Skeleton className="w-12 h-3 rounded" />
-        <Skeleton className="w-12 h-3 rounded" />
+      <Skeleton className="w-24 h-5 rounded-md mb-3" />
+      <Skeleton className="w-full h-14 rounded-lg dark:bg-white/5" />
+      <div className="flex gap-2 mt-3">
+        <Skeleton className="w-16 h-5 rounded-md" />
+        <Skeleton className="w-16 h-5 rounded-md" />
       </div>
     </div>
   )
@@ -47,9 +47,7 @@ const HNStory = ({ id, comment = true, points = true }: StoryProps) => {
   });
   const navigate = useNavigate();
 
-  if (isLoading)
-    return <HNStoryLoader />
-
+  if (isLoading) return <HNStoryLoader />
   if (error) return <div>There was an error</div>;
 
   if (!story) return null;
@@ -60,8 +58,9 @@ const HNStory = ({ id, comment = true, points = true }: StoryProps) => {
       onClick={() => navigate(`/story/${story.id}`)}
     >
       <div className="w-full">
-        <div className="items-center mb-4 gap-1">
-          <HNUsername author={story.by} className="mb-1" />
+        <div className="flex items-center mb-2 gap-1">
+          <HNUsername author={story.by} />
+          <span className="text-neutral-200">·</span>
           <HNStoryTime unix={story.time} />
         </div>
         <HNStoryBody type={story.type} url={story.url} text={story.text} title={story.title} />

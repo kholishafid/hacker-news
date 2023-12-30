@@ -1,10 +1,10 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useRef } from "react";
-import HNLoader from "../components/UI/HNLoader";
-import HNStory from "../components/Story/HNStory";
+import HNStory, { HNStoryLoader } from "../components/Story/HNStory";
 import useSetup from "../hooks/useSetup";
 
 const Jobs: FC = () => {
+  const [loaderShow, setLoaderShow] = useState<boolean>(false)
   const observerElement = useRef<HTMLDivElement>(null);
 
   const { storyList } = useSetup(
@@ -12,8 +12,23 @@ const Jobs: FC = () => {
     "https://hacker-news.firebaseio.com/v0/jobstories.json?print=pretty"
   );
 
+  useEffect(() => {
+    let timeout: NodeJS.Timeout
+
+    timeout = setTimeout(() => {
+      setLoaderShow(true)
+    }, 300);
+
+    return () => clearTimeout(timeout)
+  }, [])
+
   if (storyList.length === 0) {
-    return <HNLoader />;
+    if (loaderShow) {
+      return [...Array(20)].map((_, x) => (
+        <HNStoryLoader key={x} />
+      ))
+    }
+    return null
   }
 
   return (
