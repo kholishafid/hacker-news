@@ -1,7 +1,7 @@
 
 # Hacker News Clone
 
-A Simple Hacker News Client built using [React](https://react.dev/), [Tailwind](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/)
+A Simple Hacker News Client built using [React](https://react.dev/), [Tailwind](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/)
 
 This is my learning projects to get familiar with React
 
@@ -13,8 +13,4 @@ This is my learning projects to get familiar with React
   - Job Stories
   - Show Stories
 - [x] Read Stories and comments
-
-## TODO
-
-- [ ] Add Auth
-- [ ] Upvote, downvote, comment
+- [x] Light/Dark Mode
