@@ -33,7 +33,7 @@ const AppHeader = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="p-6 border-b max-sm:fixed absolute top-0 inset-x-0 bg-white/80 backdrop-blur-sm z-10 flex items-center dark:bg-neutral-800/50 dark:text-neutral-100 dark:border-neutral-700">
+    <header className="p-6 border-b max-sm:fixed sticky top-0 inset-x-0 bg-white/80 backdrop-blur-sm z-10 flex items-center dark:bg-neutral-800/50 dark:text-neutral-100 dark:border-neutral-700">
       {id && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -58,17 +58,20 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="ui-theme">
-        <div className="max-w-3xl mx-auto flex max-sm:flex-col-reverse h-screen max-sm:overflow-auto relative">
-          <HNSidebar menuList={sidebarMenu} />
-          <div className="w-full min-w-3xl relative flex flex-1 h-full border-r overflow-x-hidden dark:border-neutral-700">
+        <div className="flex justify-center">
+          <div className="flex md:min-w-60">
+            <HNSidebar menuList={sidebarMenu} />
+          </div>
+          <main className="w-full md:max-w-3xl border-x dark:border-neutral-700 min-h-screen bg-white dark:bg-neutral-800 relative">
             <AppHeader />
-            <main
-              className="relative w-full overflow-y-auto flex-1 pt-20 max-md:pb-14 bg-white dark:bg-neutral-800"
+            <div
+              className="w-full relative overflow-y-auto flex-1 sm:-mt-20 pt-20 max-md:pb-14 bg-white dark:bg-neutral-800"
               id="main-app"
             >
               <Outlet />
-            </main>
-          </div>
+            </div>
+          </main>
+          <div className="lg:min-w-60"></div>
         </div>
       </ThemeProvider>
     </QueryClientProvider>

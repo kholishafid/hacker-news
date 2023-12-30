@@ -28,7 +28,7 @@ const HNSidebar: FC<HNSidebarProps> = ({ menuList }) => {
   }
 
   return (
-    <aside className="max-sm:min-w-fit max-lg:min-w-[25%] lg:max-w-[250px] md:h-screen border-r border-gray-200 max-md:fixed inset-x-0 max-md:border-t bottom-0 z-20 dark:border-neutral-700 px-4 md:flex md:flex-col xl:absolute xl:-left-[250px]">
+    <aside className="min-w-fit fixed inset-x-0 z-20 bottom-0 md:px-4 md:py-1 md:sticky md:inset-y-0 md:max-h-screen md:min-w-60 flex flex-col">
       <h1 className="h-20 px-3 flex items-center max-md:hidden dark:text-white">
         Hackernews.
       </h1>

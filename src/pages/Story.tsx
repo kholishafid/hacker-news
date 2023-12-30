@@ -48,7 +48,6 @@ const StoryParent: FC<StoryParentProps> = ({
 };
 
 const Story = () => {
-  const [commentList, setCommentList] = useState<number[]>([])
 
   const { id } = useParams();
 
@@ -59,6 +58,8 @@ const Story = () => {
         .get(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
         .then((res) => res.data as StoryTypesInterface),
   });
+
+  const [commentList, setCommentList] = useState<number[]>(story?.kids?.slice(0, 20) ?? [])
 
   const observerElement = useRef<HTMLDivElement>(null);
 

@@ -45,7 +45,7 @@ const Home: FC = () => {
       {
         storyList.length > 0 ? (
           <>
-            {storyList.map((storyId) => (
+            {storyList?.slice(0, 20).map((storyId) => (
               <HNStory key={storyId} id={storyId} />
             ))}
             <div id="observe" ref={observerElement}></div>

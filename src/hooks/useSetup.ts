@@ -4,20 +4,21 @@ import { RefObject, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const useSetup = (observerElement: RefObject<HTMLDivElement>, storySourceUrl: string) => {
-  const [storyList, setStoryList] = useState<number[]>([]);
 
   const { pathname } = useLocation();
 
-
   const { data: stories } = useQuery({
-    queryKey: [pathname, storySourceUrl],
+    queryKey: [storySourceUrl],
     queryFn: () =>
       axios
         .get(
           storySourceUrl
         )
         .then((res) => res.data as number[]),
+    staleTime: 60 * 1000
   });
+
+  const [storyList, setStoryList] = useState<number[]>(stories?.slice(0, 20) ?? []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

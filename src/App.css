@@ -81,15 +81,3 @@
     background-color: var(--page-background);
   }
 }
-
-html #main-app::-webkit-scrollbar {
-  display: none;
-}
-
-#main-app {
-  -ms-overflow-style: none;
-}
-
-#main-app {
-  scrollbar-width: none;
-}
